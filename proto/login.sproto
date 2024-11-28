@@ -1,0 +1,13 @@
+.ServerListRequest {
+}
+
+.ServerListResponse {
+    ServerList 0 : *string
+}
+
+.LoginReuest {
+}
+
+.LoginRespone {
+    MyValue 0: integer
+}

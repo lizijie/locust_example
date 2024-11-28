@@ -1,0 +1,7 @@
+.EchoRequest {
+    Text 0 : string
+}
+
+.EchoResponse {
+    Text 0 : string
+}

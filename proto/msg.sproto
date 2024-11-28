@@ -1,0 +1,4 @@
+.Msg {
+    Name 0 : string
+    Bin 1 : binary
+}
