@@ -1,4 +1,4 @@
-本工程locust_example，基于压测工具[locust](https://github.com/cloudwu/sproto)，数据协议[Sproto](https://github.com/cloudwu/sproto)，[python websocket-client](https://github.com/websocket-client/websocket-client)和本人过往游戏开发的经验，封闭的一个示例程序。
+本工程locust_example，基于压测工具[locust](https://github.com/cloudwu/sproto)，数据协议[Sproto](https://github.com/cloudwu/sproto)，[python websocket-client](https://github.com/websocket-client/websocket-client)和本人过往游戏开发的经验，封装的一个示例程序。
 
 # 目录
 proto 协议配置文件.sproto
