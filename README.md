@@ -21,7 +21,7 @@ cd ./simple_robot/ && sh start.sh
 # 业务压测
 mods目录下是各个模块的对象，除了示例role_mod，你还可以增加hero_mod，friend_mod和battle_mod等，每个xxx_mod里，你应该做的事
 - 定义tasks压测任务
-- 监听协议，处理业务
+- 监听网络协议，处理业务
 - 缓存后端返回的数据,如role_mod.my_value，方便在task做判断走不同压测逻辑
 
 # 关于locust
@@ -49,7 +49,9 @@ User.tasks是用来定义压测任务，但请注意它是一个静态成员，�
 * TaskSet是一个临时对象，不要在TaskSet里存放要共享的数据状态。
 * 小心动态添加TaskSet，因为多个User对象，都会执行添加TaskSet的代码，将会导致重复添加了多个TaskSet
 
-以这两个问题可以通过，改写locust内部流程，深度制定解决[Using Locust as a library](https://docs.locust.io/en/stable/use-as-lib.html#using-locust-as-a-library)。
+对于游戏场景，我们需要角色登录成功后，才能执行压测逻辑。locust控制TaskSet的启动时机，需要重写User.start，见示例GameUser.start
+
+以上问题可以通过，改写locust内部流程，深度制定解决[Using Locust as a library](https://docs.locust.io/en/stable/use-as-lib.html#using-locust-as-a-library)。
 前提你对locust源码有深度了解，hold得住locust的版本变化。
 
 

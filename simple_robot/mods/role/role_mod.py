@@ -9,12 +9,12 @@ class RoleMod(BaseMod):
         super().__init__(*args, **kwargs)
         self.my_value = 0
 
-    def on_start(self):
+    def start(self):
         def _open():
             self.send("YOUR_SOCKET_NAME", "ServerListRequest", {}),
         self.connect("YOUR_SOCKET_NAME", self.user.host, _open)
 
-    def on_stop(self):
+    def stop(self):
         pass
 
     def get_message_handlers(self):
@@ -35,3 +35,5 @@ class RoleMod(BaseMod):
 
     def on_LoginRespone(self, pkg):
         self.my_value = pkg["MyValue"]
+        
+        self.run_tasks()

@@ -44,16 +44,27 @@ class GameUser(User):
         self.handlers = self.load_handlers(self.mods)
         self.conns = {}
 
-    def on_start(self):
-        for mod in self.mods.values():
-            mod.on_start()
+    def start(self, group):
+        # super().start会启动task
+        # 但是总会有部分逻辑，要先Task执行，如登录成功后，才执行Task
+        # 所以不在此处调用super().start，而是延后到run_tasks
+        # super().start()
+        self._group = group
 
-    def on_stop(self):
         for mod in self.mods.values():
-            mod.on_stop()
+            mod.start()
+
+    def stop(self):
+        super().stop()
+
+        for mod in self.mods.values():
+            mod.stop()
 
         for _, socket in self.conns.items():
             socket.disconnect()
+
+    def run_tasks(self):
+        super().start(self._group)
 
     def connect(self, name, host, on_open):
         socket = GameConnection(self)
@@ -83,7 +94,7 @@ class GameUser(User):
                 hdl(pkg)
             except Exception:
                 print(f"Uncaught exception in event hdl: name:{name}, pkg:{pkg}\n{traceback.format_exc()}")
-
+            
     def load_mods(self, mod_dir: str):
         mods = {}
 
