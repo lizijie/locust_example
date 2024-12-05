@@ -3,7 +3,7 @@ import websockets
 import random
 
 from common.sproto_utils import load_protos, sproto_encode, sproto_decode
-load_protos("../proto")
+load_protos("../protos")
 
 async def handler_server_list(websocket):
     try:

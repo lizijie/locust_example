@@ -5,7 +5,7 @@ from locust import *
 from simple_robot.common.game_connection import GameConnection
 from simple_robot.mods.base_mod import BaseMod
 
-def foread_mod_cls(mod_dir: str, cb):
+def foreach_mod_cls(mod_dir: str, cb):
     if callable(cb) is None:
         return
 
@@ -30,19 +30,21 @@ def load_tasks(mod_dir: str):
         if attr.tasks:
             tasks.extend(attr.tasks)
 
-    foread_mod_cls(mod_dir, _cb)
+    foreach_mod_cls(mod_dir, _cb)
 
     return tasks
 
 class GameUser(User):
     wait_time = between(1, 5)
-    tasks = load_tasks("mods")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.mods = self.load_mods("mods")
+        self.mods = self.load_mods(self.environment.parsed_options.my_mods_path)
         self.handlers = self.load_handlers(self.mods)
         self.conns = {}
+
+        if not GameUser.tasks:
+            GameUser.tasks = load_tasks(self.environment.parsed_options.my_mods_path)
 
     def start(self, group):
         # super().start会启动task
@@ -100,7 +102,7 @@ class GameUser(User):
 
         def _cb(attr):
             mods[attr.__name__] = attr(self)
-        foread_mod_cls(mod_dir, _cb)
+        foreach_mod_cls(mod_dir, _cb)
 
         return mods
 
