@@ -1,3 +1,3 @@
 #!/bin/sh
 
-PYTHONPATH=../ python ./server.py
+PYTHONPATH=../ python3 ./server.py
